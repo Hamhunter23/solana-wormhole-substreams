@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package wormhole.combined.v1;
+
+import "wormhole/output.proto";
+import "wormhole/token_bridge.proto";
+import "wormhole/nft_bridge.proto";
+
+// This message combines all Wormhole activities across different bridges
+message WormholeActivity {
+  // Core bridge message publications
+  repeated wormhole.output.v1.MessagePublication core_messages = 1;
+  
+  // Token bridge transfers
+  repeated wormhole.token_bridge.v1.TokenTransfer token_transfers = 2;
+  
+  // NFT bridge transfers
+  repeated wormhole.nft_bridge.v1.NFTTransfer nft_transfers = 3;
+  
+  // Various aggregated metrics
+  int64 timestamp = 4; // Block timestamp
+  uint64 total_value_locked = 5; // Total value locked in USD (if calculable)
+  uint64 daily_active_users = 6; // Unique users in last 24h (if tracking state)
+  uint64 total_transactions = 7; // Total number of transactions
+  
+  // Cross-chain analytics
+  repeated ChainPair chain_pairs = 8; // Metrics for each source-destination chain pair
+  repeated TokenMetrics top_tokens = 9; // Metrics for top tokens by volume
+}
+
+// Metrics for a specific source-destination chain pair
+message ChainPair {
+  string source_chain = 1; // Source chain identifier
+  string destination_chain = 2; // Destination chain identifier
+  uint64 message_count = 3; // Number of messages between chains
+  uint64 token_transfer_count = 4; // Number of token transfers
+  uint64 nft_transfer_count = 5; // Number of NFT transfers
+  double token_volume_usd = 6; // Total volume in USD (if calculable)
+}
+
+// Metrics for a specific token
+message TokenMetrics {
+  string token_address = 1; // Token address
+  string token_symbol = 2; // Token symbol
+  string token_name = 3; // Token name
+  uint64 transfer_count = 4; // Number of transfers
+  double volume_usd = 5; // Total volume in USD (if calculable)
+  uint64 unique_users = 6; // Unique users
+} 

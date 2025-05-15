@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package wormhole.nft_bridge.v1;
+
+// This message represents an NFT transfer event through the Wormhole NFT Bridge
+message NFTTransfer {
+  // Contextual data from the Solana transaction/block
+  string tx_id = 1; // Base58 encoded transaction signature
+  uint64 block_slot = 2;
+  int64 block_timestamp = 3; // In seconds
+  uint32 instruction_index = 4; // Index of the top-level instruction
+  uint32 inner_instruction_index = 5; // Index within inner instructions (0 if top-level)
+
+  // Data specific to NFT transfers
+  string nft_address = 6; // The NFT contract address on source chain
+  string nft_chain = 7; // Source chain ID
+  string to_address = 8; // Recipient address on target chain (serialized based on target chain)
+  string to_chain = 9; // Destination chain ID
+  string from_address = 10; // Sender address (Solana account in base58)
+  uint64 token_id = 11; // NFT token ID
+  string uri = 12; // NFT token URI
+  string name = 13; // NFT name
+  string symbol = 14; // NFT collection symbol
+  uint64 sequence = 15; // Sequence number (for ordering)
+  string payload = 16; // Any additional payload data (base64 encoded)
+}
+
+// Container for multiple NFT transfer events
+message NFTTransfers {
+  repeated NFTTransfer transfers = 1;
+} 

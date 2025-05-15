@@ -1,0 +1,32 @@
+syntax = "proto3";
+
+package wormhole.token_bridge.v1;
+
+// This message represents a token transfer event through the Wormhole Token Bridge
+message TokenTransfer {
+  // Contextual data from the Solana transaction/block
+  string tx_id = 1; // Base58 encoded transaction signature
+  uint64 block_slot = 2;
+  int64 block_timestamp = 3; // In seconds
+  uint32 instruction_index = 4; // Index of the top-level instruction
+  uint32 inner_instruction_index = 5; // Index within inner instructions (0 if top-level)
+
+  // Data specific to token transfers
+  string token_address = 6; // The token contract address on source chain
+  string token_chain = 7; // Source chain ID
+  string to_address = 8; // Recipient address on target chain (serialized based on target chain)
+  string to_chain = 9; // Destination chain ID
+  string from_address = 10; // Sender address (Solana account in base58)
+  uint64 amount = 11; // Transfer amount (in token's lowest denomination)
+  uint64 fee = 12; // Fee amount (in token's lowest denomination)
+  string token_symbol = 13; // Token symbol if available
+  uint32 token_decimals = 14; // Token decimals if available
+  string token_name = 15; // Token name if available
+  uint64 sequence = 16; // Sequence number (for ordering)
+  string payload = 17; // Any additional payload data (base64 encoded)
+}
+
+// Container for multiple token transfer events
+message TokenTransfers {
+  repeated TokenTransfer transfers = 1;
+} 

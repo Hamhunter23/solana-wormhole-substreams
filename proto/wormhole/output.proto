@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+package wormhole.output.v1;
+
+// This message represents the data we extract for each Wormhole MessagePublication event.
+message MessagePublication {
+  // Contextual data from the Solana transaction/block
+  string tx_id = 1; // Base58 encoded transaction signature
+  uint64 block_slot = 2;
+  int64 block_timestamp = 3; // In seconds
+  uint32 instruction_index = 4; // Index of the top-level instruction
+  uint32 inner_instruction_index = 5; // Index within inner instructions (0 if top-level)
+
+  // Data directly from the Wormhole MessagePublication event
+  uint32 nonce = 6;
+  bytes payload = 7; // The raw message payload
+  string emitter_account = 8; // Base58 encoded emitter address
+  uint64 sequence = 9;
+  uint32 consistency_level = 10; // Mapped from u8
+  uint64 event_timestamp = 11; // Timestamp from the event itself (might be same as block, depends on program)
+}
+
+// A container for multiple MessagePublication events per block
+message MessagePublications {
+    repeated MessagePublication publications = 1;
+}

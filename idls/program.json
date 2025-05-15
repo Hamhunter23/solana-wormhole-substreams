@@ -1,0 +1,205 @@
+{"metadata":{"address":"worm2ZoG2kUd4vFXhvjh93UUH596ayRfgQ2MgjNMTth"},
+    "version": "0.1.0",
+    "name": "wormhole_core",
+    "instructions": [
+      {
+        "name": "initialize",
+        "accounts": [
+          { "name": "payer", "isMut": true, "isSigner": true },
+          { "name": "config", "isMut": true, "isSigner": false },
+          { "name": "fee_collector", "isMut": false, "isSigner": false },
+          { "name": "system_program", "isMut": false, "isSigner": false },
+          { "name": "rent", "isMut": false, "isSigner": false }
+        ],
+        "args": [
+          { "name": "governance_vaas_enabled", "type": "bool" }
+        ]
+      },
+      {
+        "name": "setFees",
+        "accounts": [
+          { "name": "owner", "isMut": false, "isSigner": true },
+          { "name": "config", "isMut": true, "isSigner": false }
+        ],
+        "args": [
+          { "name": "batch_price", "type": "u64" }
+        ]
+      },
+      {
+        "name": "transferFees",
+        "accounts": [
+          { "name": "owner", "isMut": false, "isSigner": true },
+          { "name": "config", "isMut": true, "isSigner": false },
+          { "name": "fee_collector", "isMut": true, "isSigner": false }
+        ],
+        "args": [
+          { "name": "amount", "type": "u64" }
+        ]
+      },
+      {
+        "name": "setGovernanceBot",
+        "accounts": [
+          { "name": "owner", "isMut": false, "isSigner": true },
+          { "name": "config", "isMut": true, "isSigner": false },
+          { "name": "governance_bot", "isMut": false, "isSigner": false }
+        ],
+        "args": []
+      },
+      {
+        "name": "postMessage",
+        "accounts": [
+          { "name": "emitter", "isMut": true, "isSigner": true },
+          { "name": "message", "isMut": true, "isSigner": false },
+          { "name": "config", "isMut": false, "isSigner": false },
+          { "name": "fee_collector", "isMut": true, "isSigner": false },
+          { "name": "sequence", "isMut": true, "isSigner": false },
+          { "name": "rent", "isMut": false, "isSigner": false },
+          { "name": "system_program", "isMut": false, "isSigner": false }
+        ],
+        "args": [
+          { "name": "nonce", "type": "u32" },
+          { "name": "payload", "type": "bytes" },
+          { "name": "consistency_level", "type": "u8" }
+        ]
+      },
+      {
+        "name": "postvaa",
+        "accounts": [
+          { "name": "payer", "isMut": true, "isSigner": true },
+          { "name": "config", "isMut": false, "isSigner": false },
+          { "name": "vaa", "isMut": true, "isSigner": false },
+          { "name": "signature_set", "isMut": false, "isSigner": false },
+          { "name": "system_program", "isMut": false, "isSigner": false },
+          { "name": "rent", "isMut": false, "isSigner": false }
+        ],
+        "args": [
+          { "name": "vaa", "type": "bytes" }
+        ]
+      },
+      {
+        "name": "parseAndPostvaa",
+        "accounts": [
+          { "name": "payer", "isMut": true, "isSigner": true },
+          { "name": "config", "isMut": false, "isSigner": false },
+          { "name": "vaa", "isMut": true, "isSigner": false },
+          { "name": "signature_set", "isMut": true, "isSigner": true },
+          { "name": "system_program", "isMut": false, "isSigner": false },
+          { "name": "rent", "isMut": false, "isSigner": false },
+          { "name": "wormhole_program", "isMut": false, "isSigner": false }
+        ],
+        "args": [
+          { "name": "vaa", "type": "bytes" }
+        ]
+      },
+      {
+        "name": "upgradeGuardianSet",
+        "accounts": [
+          { "name": "payer", "isMut": true, "isSigner": true },
+          { "name": "config", "isMut": true, "isSigner": false },
+          { "name": "new_guardian_set", "isMut": true, "isSigner": false },
+          { "name": "system_program", "isMut": false, "isSigner": false },
+          { "name": "rent", "isMut": false, "isSigner": false }
+        ],
+        "args": [
+          { "name": "vaa", "type": "bytes" }
+        ]
+      },
+      {
+        "name": "setPaused",
+        "accounts": [
+          { "name": "owner", "isMut": false, "isSigner": true },
+          { "name": "config", "isMut": true, "isSigner": false }
+        ],
+        "args": [
+          { "name": "paused", "type": "bool" }
+        ]
+      },
+      {
+        "name": "postMessageFast",
+        "accounts": [
+          { "name": "emitter", "isMut": true, "isSigner": true },
+          { "name": "message", "isMut": true, "isSigner": false },
+          { "name": "config", "isMut": false, "isSigner": false },
+          { "name": "sequence", "isMut": true, "isSigner": false },
+          { "name": "rent", "isMut": false, "isSigner": false },
+          { "name": "system_program", "isMut": false, "isSigner": false },
+          { "name": "signature_set", "isMut": false, "isSigner": false }
+        ],
+        "args": [
+          { "name": "nonce", "type": "u32" },
+          { "name": "payload", "type": "bytes" },
+          { "name": "consistency_level", "type": "u8" }
+        ]
+      },
+      {
+        "name": "setUpgradeBuffer",
+        "accounts": [
+          { "name": "owner", "isMut": false, "isSigner": true },
+          { "name": "config", "isMut": true, "isSigner": false }
+        ],
+        "args": [
+          { "name": "upgrade_buffer", "type": "bytes" }
+        ]
+      },
+      {
+        "name": "submitVaaFast",
+        "accounts": [
+          { "name": "payer", "isMut": true, "isSigner": true },
+          { "name": "signature_set", "isMut": true, "isSigner": true },
+          { "name": "system_program", "isMut": false, "isSigner": false },
+          { "name": "rent", "isMut": false, "isSigner": false }
+        ],
+        "args": [
+          { "name": "vaa", "type": "bytes" }
+        ]
+      }
+    ],
+    "events": [
+      {
+        "name": "MessagePublication",
+        "fields": [
+          { "name": "nonce", "type": "u32", "index": false },
+          { "name": "payload", "type": "bytes", "index": false },
+          { "name": "emitter_account", "type": "pubkey", "index": true },
+          { "name": "sequence", "type": "u64", "index": true },
+          { "name": "consistency_level", "type": "u8", "index": false },
+          { "name": "timestamp", "type": "u64", "index": false }
+        ]
+      },
+      {
+        "name": "GuardianSetAppended",
+        "fields": [
+          { "name": "guardian_set_index", "type": "u32", "index": false }
+        ]
+      }
+    ],
+    "state": {
+      "struct": {
+        "name": "State",
+        "fields": [
+          { "name": "guardian_set_index", "type": "u32" },
+          { "name": "config", "type": { "defined": "Config" } }
+        ]
+      }
+    },
+    "types": [
+      {
+        "name": "Config",
+        "type": {
+          "kind": "struct",
+          "fields": [
+            { "name": "owner", "type": "pubkey" },
+            { "name": "guardian_set_expiration_time", "type": "u32" },
+            { "name": "fee_collector", "type": "pubkey" },
+            { "name": "fees", "type": "u64" },
+            { "name": "batch_price", "type": "u64" },
+            { "name": "paused", "type": "bool" },
+            { "name": "batch_size", "type": "u32" },
+            { "name": "governance_bot", "type": "pubkey" },
+            { "name": "governance_vaas_enabled", "type": "bool" },
+            { "name": "upgrade_buffer", "type": "bytes" }
+          ]
+        }
+      }
+    ]
+  }

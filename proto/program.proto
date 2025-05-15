@@ -1,0 +1,138 @@
+syntax = "proto3";
+
+package substreams.v1.program;
+
+message Data {
+    repeated MessagePublication_Event message_publication_event_list = 1;
+    repeated GuardianSetAppended_Event guardian_set_appended_event_list = 2;
+    repeated Initialize_Instruction initialize_instruction_list = 3;
+    repeated SetFees_Instruction set_fees_instruction_list = 4;
+    repeated TransferFees_Instruction transfer_fees_instruction_list = 5;
+    repeated SetGovernanceBot_Instruction set_governance_bot_instruction_list = 6;
+    repeated PostMessage_Instruction post_message_instruction_list = 7;
+    repeated Postvaa_Instruction postvaa_instruction_list = 8;
+    repeated ParseAndPostvaa_Instruction parse_and_postvaa_instruction_list = 9;
+    repeated UpgradeGuardianSet_Instruction upgrade_guardian_set_instruction_list = 10;
+    repeated SetPaused_Instruction set_paused_instruction_list = 11;
+    repeated PostMessageFast_Instruction post_message_fast_instruction_list = 12;
+    repeated SetUpgradeBuffer_Instruction set_upgrade_buffer_instruction_list = 13;
+    repeated SubmitVaaFast_Instruction submit_vaa_fast_instruction_list = 14;
+}
+message MessagePublication_Event {
+  string trx_hash = 1;
+      uint32 nonce = 2;
+      bytes payload = 3;
+      string emitter_account = 4;
+      uint64 sequence = 5;
+      uint64 consistency_level = 6;
+      uint64 timestamp = 7;
+}message GuardianSetAppended_Event {
+  string trx_hash = 1;
+      uint32 guardian_set_index = 2;
+}
+
+message Initialize_Instruction {
+  string trx_hash = 1;
+    bool governance_vaas_enabled = 2;
+    string acct_payer = 3;
+    string acct_config = 4;
+    string acct_fee_collector = 5;
+    string acct_system_program = 6;
+    string acct_rent = 7;
+}
+message SetFees_Instruction {
+  string trx_hash = 1;
+    uint64 batch_price = 2;
+    string acct_owner = 3;
+    string acct_config = 4;
+}
+message TransferFees_Instruction {
+  string trx_hash = 1;
+    uint64 amount = 2;
+    string acct_owner = 3;
+    string acct_config = 4;
+    string acct_fee_collector = 5;
+}
+message SetGovernanceBot_Instruction {
+  string trx_hash = 1;
+    string acct_owner = 2;
+    string acct_config = 3;
+    string acct_governance_bot = 4;
+}
+message PostMessage_Instruction {
+  string trx_hash = 1;
+    uint32 nonce = 2;
+    bytes payload = 3;
+    uint64 consistency_level = 4;
+    string acct_emitter = 5;
+    string acct_message = 6;
+    string acct_config = 7;
+    string acct_fee_collector = 8;
+    string acct_sequence = 9;
+    string acct_rent = 10;
+    string acct_system_program = 11;
+}
+message Postvaa_Instruction {
+  string trx_hash = 1;
+    bytes vaa = 2;
+    string acct_payer = 3;
+    string acct_config = 4;
+    string acct_vaa = 5;
+    string acct_signature_set = 6;
+    string acct_system_program = 7;
+    string acct_rent = 8;
+}
+message ParseAndPostvaa_Instruction {
+  string trx_hash = 1;
+    bytes vaa = 2;
+    string acct_payer = 3;
+    string acct_config = 4;
+    string acct_vaa = 5;
+    string acct_signature_set = 6;
+    string acct_system_program = 7;
+    string acct_rent = 8;
+    string acct_wormhole_program = 9;
+}
+message UpgradeGuardianSet_Instruction {
+  string trx_hash = 1;
+    bytes vaa = 2;
+    string acct_payer = 3;
+    string acct_config = 4;
+    string acct_new_guardian_set = 5;
+    string acct_system_program = 6;
+    string acct_rent = 7;
+}
+message SetPaused_Instruction {
+  string trx_hash = 1;
+    bool paused = 2;
+    string acct_owner = 3;
+    string acct_config = 4;
+}
+message PostMessageFast_Instruction {
+  string trx_hash = 1;
+    uint32 nonce = 2;
+    bytes payload = 3;
+    uint64 consistency_level = 4;
+    string acct_emitter = 5;
+    string acct_message = 6;
+    string acct_config = 7;
+    string acct_sequence = 8;
+    string acct_rent = 9;
+    string acct_system_program = 10;
+    string acct_signature_set = 11;
+}
+message SetUpgradeBuffer_Instruction {
+  string trx_hash = 1;
+    bytes upgrade_buffer = 2;
+    string acct_owner = 3;
+    string acct_config = 4;
+}
+message SubmitVaaFast_Instruction {
+  string trx_hash = 1;
+    bytes vaa = 2;
+    string acct_payer = 3;
+    string acct_signature_set = 4;
+    string acct_system_program = 5;
+    string acct_rent = 6;
+}
+

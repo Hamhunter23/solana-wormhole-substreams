@@ -1,0 +1,96 @@
+specVersion: v0.1.0
+package:
+  name: wormhole_indexer
+  version: v0.1.0
+  description: Comprehensive Wormhole cross-chain messaging and asset transfers indexer
+  url: https://github.com/Hamhunter23/solana-wormhole-substreams
+
+
+imports:
+  solana: https://spkg.io/streamingfast/solana-common-v0.3.0.spkg
+
+protobuf:
+  files:
+    - program.proto
+    - wormhole/output.proto
+    - wormhole/token_bridge.proto
+    - wormhole/nft_bridge.proto
+    - wormhole/combined.proto
+  importPaths:
+    - ./proto
+  excludePaths:
+    - sf/substreams/rpc
+    - sf/substreams/v1
+    - sf/substreams/sink
+    - sf/substreams/index
+    - sf/substreams/index/v1
+    - instructions.proto # sol.instructions.v1 from the v0.2.0 spkg
+    - transactions.proto # sol.transactions.v1 from the v0.2.0 spkg
+    - google
+
+binaries:
+  default:
+    type: wasm/rust-v1+wasm-bindgen-shims
+    file: ./target/wasm32-unknown-unknown/release/substreams.wasm
+
+modules:
+  - name: map_core_bridge_data
+    kind: map
+    initialBlock: 0
+    inputs:
+      - map: solana:blocks_without_votes
+    output:
+      type: proto:wormhole.output.v1.MessagePublications
+    blockFilter:
+      module: solana:program_ids_without_votes
+      query:
+        string: program:worm2ZoG2kUd4vFXhvjh93UUH596ayRfgQ2MgjNMTth
+
+  - name: map_token_bridge_data
+    kind: map
+    initialBlock: 0
+    inputs:
+      - map: solana:blocks_without_votes
+    output:
+      type: proto:wormhole.token_bridge.v1.TokenTransfers
+    blockFilter:
+      module: solana:program_ids_without_votes
+      query:
+        string: program:wormDTUJ6AWPNvk59vGQbDvGJmqbDTdgWgAqcLBCgUb
+
+  - name: map_nft_bridge_data
+    kind: map
+    initialBlock: 0
+    inputs:
+      - map: solana:blocks_without_votes
+    output:
+      type: proto:wormhole.nft_bridge.v1.NFTTransfers
+    blockFilter:
+      module: solana:program_ids_without_votes
+      query:
+        string: program:WnFt12ZrnzZrFZkt2xsNsaNWoQribnuQ5B5FrDbwDhD
+
+  - name: map_wormhole_program_data
+    kind: map
+    initialBlock: 0
+    inputs:
+      - map: solana:blocks_without_votes
+    output:
+      type: proto:wormhole.output.v1.MessagePublications
+    blockFilter:
+      module: solana:program_ids_without_votes
+      query:
+        string: program:HDwcJBJXjL9FpJ7UBsYBtaDjsBUhuLCUYoz3zr8SWWaQ
+
+  - name: combine_wormhole_activity
+    kind: map
+    initialBlock: 0
+    inputs:
+      - map: map_core_bridge_data
+      - map: map_token_bridge_data
+      - map: map_nft_bridge_data
+      - map: map_wormhole_program_data
+    output:
+      type: proto:wormhole.combined.v1.WormholeActivity
+
+network: solana-mainnet 
