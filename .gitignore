@@ -1,6 +1,8 @@
 # substreams auth file
 .substreams.env
 
+**/node_modules
+
 # Compiled source files
 target/
 

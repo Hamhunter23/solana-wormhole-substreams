@@ -1,7 +1,7 @@
 specVersion: v0.1.0
 package:
   name: wormhole_indexer
-  version: v0.1.0
+  version: v0.2.0
   description: Comprehensive Wormhole cross-chain messaging and asset transfers indexer
   url: https://github.com/Hamhunter23/solana-wormhole-substreams
 
